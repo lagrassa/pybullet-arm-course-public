@@ -10,7 +10,7 @@ setup(name='pybullet_arm_course',
       author='Alex LaGrassa, Tiffany Yu',
       author_email='lagrassa@cmu.edu, tiffany2@cmu.edu',
       packages=['pybullet_arm_course', 'pybullet_arm_course.pybullet_tools', 'pybullet_arm_course.pybullet_tools.ikfast'],
-      package_data={"pybullet_arm_course": ['assets/*']},
+      package_data={"": ['assets/franka_description/robots/franka_panda.urdf']},
       include_package_data=True,
      )
 
