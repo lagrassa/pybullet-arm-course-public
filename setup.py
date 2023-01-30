@@ -9,6 +9,7 @@ setup(name='pybullet_arm_course',
       description='PyBullet planning course',
       author='Alex LaGrassa, Tiffany Yu',
       author_email='lagrassa@cmu.edu, tiffany2@cmu.edu',
-      packages=['pybullet_arm_course', 'pybullet_arm_course.pybullet_tools', 'pybullet_arm_course.pybullet_tools.ikfast', 'assets']
+      packages=['pybullet_arm_course', 'pybullet_arm_course.pybullet_tools', 'pybullet_arm_course.pybullet_tools.ikfast'],
+      package_data={"pybullet_arm_course": ['assets/*']}
      )
 
