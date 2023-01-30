@@ -4,6 +4,7 @@ from pybullet_arm_course.pybullet_tools.ikfast.ikfast import get_ik_joints, eith
 from .environment_setup import get_object_position
 from .robot_setup import get_gripper_position
 from collections import namedtuple
+import pybullet_arm_course.pybullet_colab_tools as pct
 import numpy as np
 import math
 import pybullet as p
@@ -13,16 +14,16 @@ import sys
 FIXED_ROTATION = (1, 0, 0, 0)
 MOVABLE_JOINT_NUMBERS = [0,1,2,3,4,5,6]
 
-def wait_simulate_for_duration(duration):
+def wait_simulate_for_duration(duration, frames=None):
     dt = pb_utils.get_time_step()
     for i in range(int(math.ceil(duration / dt))):
         before = time.time()
         pb_utils.step_simulation()
-        after = time.time()
-        if after - before < dt:
-            time.sleep(dt - (after - before))
+        if frames is not None:
+            frames.append(pct.make_frame(0))
 
 def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, time_to_run=1, verbose=False, **kwargs):
+    frames = []
     if interpolate is not None:
         current_positions = pb_utils.get_joint_positions(body, joints)
         waypoints = np.linspace(current_positions, positions, num=interpolate)[1:]
@@ -35,10 +36,12 @@ def control_joint_positions(body, joints, positions, velocities=None, interpolat
         if verbose:
             print(pt)
         pb_utils.control_joints(body, joints, pt, **kwargs)
-        wait_simulate_for_duration(time_to_run / len(waypoints))
+        wait_simulate_for_duration(time_to_run / len(waypoints), frames)
 
 def control_joints(body, joints, positions, velocities=None, interpolate=10, **kwargs):
-    control_joint_positions(body, joints, [math.radians(p) for p in positions], velocities, interpolate=interpolate, **kwargs)
+    frames = control_joint_positions(body, joints, [math.radians(p) for p in positions], velocities, interpolate=interpolate, **kwargs)
+    import ipdb; ipdb.set_trace()
+    return pct.make_animation(frames)
 
 def grasp_object_for_throwing(body, object_idx, closed_pos=0.001, offsets=[0.3, 0, 0.04]):
     # closed_pos[0] -= 0.3
