@@ -7,7 +7,7 @@ setup(name='pybullet_arm_course',
             'pybullet',
       ],
       description='PyBullet planning course',
-      author='Alex LaGrassa, Tiffany Yu', 'Jessie Grosen',
+      author='Alex LaGrassa, Tiffany Yu, Jessie Grosen',
       author_email='lagrassa@cmu.edu, tiffany2@cmu.edu',
       packages=['pybullet_arm_course', 'pybullet_arm_course.pybullet_tools', 'pybullet_arm_course.pybullet_tools.ikfast'],
      )
