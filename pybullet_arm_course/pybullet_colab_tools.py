@@ -8,9 +8,6 @@ import numpy as np
 from numpngw import write_apng, write_png
 
 def setup_pybullet_colab(verbose=False):
-    p.connect(p.DIRECT)
-    #allow to find the assets (URDF, obj, textures etc)
-    p.setAdditionalSearchPath(pd.getDataPath())
     #optionally enable GPU for faster rendering in pybullet.getCameraImage
     enableGPU = False
     #import GPUtil as GPU
@@ -33,8 +30,6 @@ def setup_pybullet_colab(verbose=False):
     # NOTE: If all your GPUs currently have a memory consumption larger than 1%,
     # this step will fail. It's not a bug! It is intended to do so, if it does not
     # find an available GPU.
-    #GPUs = GPU.getGPUs()
-    #numGPUs = len(GPU.getGPUs())
     numGPUs=1
 
     if numGPUs > 0:
@@ -69,11 +64,11 @@ def make_scene():
 def make_frame(yaw):
     camTargetPos = [0, 0, 0.3]
     cameraUp = [0, 0, 1]
-    cameraPos = [1, 1, 1]
+    cameraPos = [0.7, 1, 1]
     pitch = -10.0
     roll = 0
     upAxisIndex = 2
-    camDistance = 1.5
+    camDistance = 1.2
     pixelWidth = 320
     pixelHeight = 200
     nearPlane = 0.01
@@ -105,15 +100,18 @@ def make_single_image(image_name=None,angle=0):
         image_name = _generate_random_filename()
     write_png(image_name, frame)
 
-def make_animation(image_name=None):
+def make_animation(frames, image_name=None):
+    print("creating animated png")
+    if image_name is None:
+        image_name = _generate_random_filename()
+    write_apng(image_name, frames, delay=0.1)
+    return image_name
+
+def make_multi_view_image(image_name=None):
     frames=[] #frames to create animated png
-    yaw = 0
+    yaw = 14
     for r in range(60):
         yaw += 6
         frame = make_frame(yaw)
         frames.append(frame)
-    print("creating animated png")
-    if image_name is None:
-        image_name = _generate_random_filename()
-    write_apng(image_name, frames, delay=100)
-    return image_name
+    return make_animation(frames)

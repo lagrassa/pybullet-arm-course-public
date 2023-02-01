@@ -1,9 +1,11 @@
 import pybullet_arm_course.pybullet_tools.utils as pb_utils
+import pybullet_arm_course.pybullet_colab_tools as pct
 import math
 import pybullet
 
 def make_robot(robot_filename):
-    pb_utils.connect(use_gui=True)
+    pb_utils.connect(use_gui=False)
+    pct.setup_pybullet_colab()
     pb_utils.add_data_path()
     pb_utils.load_pybullet("plane.urdf")
     # pb_utils.set_real_time(True)

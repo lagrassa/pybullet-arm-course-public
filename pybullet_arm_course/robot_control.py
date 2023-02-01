@@ -14,13 +14,14 @@ import sys
 FIXED_ROTATION = (1, 0, 0, 0)
 MOVABLE_JOINT_NUMBERS = [0,1,2,3,4,5,6]
 
-def wait_simulate_for_duration(duration, frames=None):
+def wait_simulate_for_duration(duration, frames=None, frame_every=10):
     dt = pb_utils.get_time_step()
+    yaw = 30
     for i in range(int(math.ceil(duration / dt))):
         before = time.time()
         pb_utils.step_simulation()
-        if frames is not None:
-            frames.append(pct.make_frame(0))
+        if frames is not None and i % frame_every == 0:
+            frames.append(pct.make_frame(yaw))
 
 def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, time_to_run=1, verbose=False, **kwargs):
     frames = []
@@ -37,10 +38,11 @@ def control_joint_positions(body, joints, positions, velocities=None, interpolat
             print(pt)
         pb_utils.control_joints(body, joints, pt, **kwargs)
         wait_simulate_for_duration(time_to_run / len(waypoints), frames)
+    return frames
 
 def control_joints(body, joints, positions, velocities=None, interpolate=10, **kwargs):
     frames = control_joint_positions(body, joints, [math.radians(p) for p in positions], velocities, interpolate=interpolate, **kwargs)
-    import ipdb; ipdb.set_trace()
+    print(len(frames))
     return pct.make_animation(frames)
 
 def grasp_object_for_throwing(body, object_idx, closed_pos=0.001, offsets=[0.3, 0, 0.04]):
