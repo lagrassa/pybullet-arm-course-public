@@ -31,6 +31,9 @@ def get_gripper_position(robot):
     tool_link = 7
     return list(pb_utils.get_link_pose(robot, tool_link)[0])
 
+def get_joint_positions(body, joints):
+    return pb_utils.get_joint_positions(body, joints)
+
 def wait_for_robot():
     while(1):
         _ = pybullet.getKeyboardEvents()
