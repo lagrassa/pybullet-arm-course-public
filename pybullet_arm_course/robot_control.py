@@ -13,18 +13,30 @@ import sys
 
 FIXED_ROTATION = (1, 0, 0, 0)
 MOVABLE_JOINT_NUMBERS = [0,1,2,3,4,5,6]
+FRAMES = []
 
-def wait_simulate_for_duration(duration, frames=None, frame_every=10):
+def reset_robot(my_robot):
+    FRAMES = []
+    reasonable_joint_numbers = list(range(0,7))
+    reasonable_joint_positions = [0, -math.pi / 4, 0, -3 * math.pi / 4, 0, math.pi / 2, math.pi / 4]
+    pb_utils.set_joint_positions(my_robot, reasonable_joint_numbers, reasonable_joint_positions)
+
+def wait_simulate_for_duration(duration, frame_every=10):
     dt = pb_utils.get_time_step()
     yaw = 30
     for i in range(int(math.ceil(duration / dt))):
         before = time.time()
         pb_utils.step_simulation()
-        if frames is not None and i % frame_every == 0:
-            frames.append(pct.make_frame(yaw))
+        if FRAMES is not None and i % frame_every == 0:
+            FRAMES.append(pct.make_frame(yaw))
 
-def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, time_to_run=1, verbose=False, **kwargs):
-    frames = []
+def save_robot_control_animation(image_name=None):
+    global FRAMES
+    filename =  pct.make_animation(FRAMES, image_name=image_name)
+    FRAMES = []
+    return filename
+
+def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, frame_every = 10,time_to_run=1, verbose=False, **kwargs):
     if interpolate is not None:
         current_positions = pb_utils.get_joint_positions(body, joints)
         waypoints = np.linspace(current_positions, positions, num=interpolate)[1:]
@@ -37,13 +49,10 @@ def control_joint_positions(body, joints, positions, velocities=None, interpolat
         if verbose:
             print(pt)
         pb_utils.control_joints(body, joints, pt, **kwargs)
-        wait_simulate_for_duration(time_to_run / len(waypoints), frames)
-    return frames
+        wait_simulate_for_duration(time_to_run / len(waypoints), frame_every=frame_every)
 
 def control_joints(body, joints, positions, velocities=None, interpolate=10, **kwargs):
     frames = control_joint_positions(body, joints, [math.radians(p) for p in positions], velocities, interpolate=interpolate, **kwargs)
-    print(len(frames))
-    return pct.make_animation(frames)
 
 def grasp_object_for_throwing(body, object_idx, closed_pos=0.001, offsets=[0.3, 0, 0.04]):
     # closed_pos[0] -= 0.3
@@ -93,10 +102,10 @@ def goto_position(body, goal_robot_position, time_to_run=1, **kwargs):
     control_joints(body, MOVABLE_JOINT_NUMBERS, angles, time_to_run=time_to_run, **kwargs)
 
 def open_gripper(body, open_pos = 0.04):
-    control_joint_positions(body, [8,9],[open_pos, open_pos], time_to_run=2, max_force=5*240.)
+    control_joint_positions(body, [8,9],[open_pos, open_pos], time_to_run=2, max_force=5*240., frame_every=30)
 
 def close_gripper(body, closed_pos = 0.015):
-    control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=12)
+    control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=12, frame_every=30)
 
 def inverse_kinematics(object_index, position, rotation):
     state = p.saveState()
