@@ -126,6 +126,10 @@ def any_key_is_pressed():
 def make_basic_scene(dims=None):
     pb_utils.enable_gravity()
     #pybullet.setTimeStep(1/500.,physicsClientId=pb_utils.CLIENT)
+    #delete any other objects in scene:
+    for obj in pb_utils.get_bodies():
+        if pb_utils.get_body_name(obj) not in ["plane", "panda"]:
+            pb_utils.remove_body(obj)
     mass = 0.1
     if dims is None:
         dims = BOX_DIMS
