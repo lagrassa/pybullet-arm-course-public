@@ -20,7 +20,7 @@ def reset_robot(my_robot):
     reasonable_joint_numbers = list(range(0,7))
     reasonable_joint_positions = [0, -math.pi / 4, 0, -3 * math.pi / 4, 0, math.pi / 2, math.pi / 4]
     pb_utils.set_joint_positions(my_robot, reasonable_joint_numbers, reasonable_joint_positions)
-    pb_utils.control_joint_positions(my_robot, reasonable_joint_numbers,reasonable_joint_positions, max_force=1000)
+    control_joint_positions(my_robot, reasonable_joint_numbers,reasonable_joint_positions, max_force=1000, frame_every=150)
 
 
 def wait_simulate_for_duration(duration, frame_every=10):
