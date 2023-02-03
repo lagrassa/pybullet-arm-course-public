@@ -1,6 +1,7 @@
 import pybullet_arm_course.pybullet_tools.utils as pb_utils
 import pybullet_arm_course.pybullet_colab_tools as pct
 import math
+import numpy as np
 import pybullet
 
 def make_robot(robot_filename):
