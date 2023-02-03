@@ -10,10 +10,11 @@ from numpngw import write_apng, write_png
 def setup_pybullet_colab(verbose=False):
     #optionally enable GPU for faster rendering in pybullet.getCameraImage
     enableGPU = False
-    #import GPUtil as GPU
+    import GPUtil as GPU
     import sys
     # Get all device ids and their processing and memory utiliazion
-    # (deviceIds, gpuUtil, memUtil) = GPU.getGPUs()
+    GPUs = GPU.getGPUs()
+    numGPUs = len(GPU.getGPUs())
 
     # Print os and python version information
     if verbose:
@@ -30,7 +31,6 @@ def setup_pybullet_colab(verbose=False):
     # NOTE: If all your GPUs currently have a memory consumption larger than 1%,
     # this step will fail. It's not a bug! It is intended to do so, if it does not
     # find an available GPU.
-    numGPUs=0
 
     if numGPUs > 0:
         enableGPU = True
