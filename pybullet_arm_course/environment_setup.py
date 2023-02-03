@@ -129,6 +129,7 @@ def make_basic_scene(dims=None):
     #delete any other objects in scene:
     for obj in pb_utils.get_bodies():
         if pb_utils.get_body_name(obj) not in ["plane", "panda"]:
+            print("Removing body from scene")
             pb_utils.remove_body(obj)
     mass = 0.1
     if dims is None:

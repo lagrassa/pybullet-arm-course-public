@@ -101,7 +101,7 @@ def make_single_image(image_name=None,angle=0):
     write_png(image_name, frame)
 
 def make_animation(frames, image_name=None):
-    print("creating animated png")
+    print(f"creating animated png with {len(frames)} frames")
     if image_name is None:
         image_name = _generate_random_filename()
     write_apng(image_name, frames, delay=0.1)

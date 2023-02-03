@@ -20,6 +20,8 @@ def reset_robot(my_robot):
     reasonable_joint_numbers = list(range(0,7))
     reasonable_joint_positions = [0, -math.pi / 4, 0, -3 * math.pi / 4, 0, math.pi / 2, math.pi / 4]
     pb_utils.set_joint_positions(my_robot, reasonable_joint_numbers, reasonable_joint_positions)
+    pb_utils.control_joint_positions(my_robot, reasonable_joint_numbers,reasonable_joint_positions, max_force=1000)
+
 
 def wait_simulate_for_duration(duration, frame_every=10):
     dt = pb_utils.get_time_step()
@@ -36,7 +38,7 @@ def save_robot_control_animation(image_name=None):
     FRAMES = []
     return filename
 
-def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, frame_every = 10,time_to_run=1, verbose=False, **kwargs):
+def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, frame_every = 15,time_to_run=1, verbose=False, **kwargs):
     if interpolate is not None:
         current_positions = pb_utils.get_joint_positions(body, joints)
         waypoints = np.linspace(current_positions, positions, num=interpolate)[1:]
