@@ -30,7 +30,7 @@ def setup_pybullet_colab(verbose=False):
     # NOTE: If all your GPUs currently have a memory consumption larger than 1%,
     # this step will fail. It's not a bug! It is intended to do so, if it does not
     # find an available GPU.
-    numGPUs=1
+    numGPUs=0
 
     if numGPUs > 0:
         enableGPU = True
