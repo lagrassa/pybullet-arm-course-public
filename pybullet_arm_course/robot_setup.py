@@ -6,6 +6,10 @@ import pybullet
 
 def make_robot(robot_filename):
     pb_utils.connect(use_gui=False)
+    for obj in pb_utils.get_bodies():
+        if pb_utils.get_body_name(obj) =="panda":
+            print("Robot already created")
+            return 
     pct.setup_pybullet_colab()
     pb_utils.add_data_path()
     pb_utils.load_pybullet("plane.urdf")
