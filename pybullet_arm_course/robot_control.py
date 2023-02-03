@@ -23,7 +23,7 @@ def reset_robot(my_robot):
 
 def wait_simulate_for_duration(duration, frame_every=10):
     dt = pb_utils.get_time_step()
-    yaw = 30
+    yaw = 80
     for i in range(int(math.ceil(duration / dt))):
         before = time.time()
         pb_utils.step_simulation()
@@ -58,17 +58,19 @@ def grasp_object_for_throwing(body, object_idx, closed_pos=0.001, offsets=[0.3, 
     # closed_pos[0] -= 0.3
     grasp_object(body, object_idx, closed_pos=closed_pos, offsets=offsets)  
 
-def position_for_throwing(body, dx=-0.2, dy=0.0, dz=0.2):
+def back_up_to_throw(body, dx=-0.2, dy=0.0, dz=0.2):
     new_position = get_gripper_position(body)
     new_position[0] -= 0.2
     new_position[2] += 0.2
     target_joint_pos = inverse_kinematics(body, new_position, FIXED_ROTATION)
     control_joints(body, MOVABLE_JOINT_NUMBERS, target_joint_pos, max_force=20) 
 
-def throw(my_robot, velocity, max_force, dx=0.2, dy=0, dz=0.4, closed_pos=0.03):
+def throw(my_robot, velocity, max_force, dx=0.2, dy=0, dz=0.4, closed_pos=0.000723): #0.000523 worked okay
+    pb_utils.disable_real_time()
     robot_target_pos = np.array(get_gripper_position(my_robot)) + np.array([dx, dy, dz])
     target_joint_pos = inverse_kinematics(my_robot, robot_target_pos, FIXED_ROTATION)
     # import pdb; pdb.set_trace()
+    #control_joints(my_robot, MOVABLE_JOINT_NUMBERS, target_joint_pos, velocities = [velocity] * 7, interpolate=2, max_force=max_force)
     control_joints(my_robot, MOVABLE_JOINT_NUMBERS + [8, 9], target_joint_pos + [closed_pos, closed_pos], velocities = [velocity] * 7, interpolate=2, max_force=max_force)
 
 def grasp_object(body, object_idx, closed_pos = 0.015, offsets=[0, 0, 0.04]):
@@ -104,8 +106,9 @@ def goto_position(body, goal_robot_position, time_to_run=1, **kwargs):
 def open_gripper(body, open_pos = 0.04):
     control_joint_positions(body, [8,9],[open_pos, open_pos], time_to_run=2, max_force=5*240., frame_every=30)
 
-def close_gripper(body, closed_pos = 0.015):
-    control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=12, frame_every=30)
+def close_gripper(body, closed_pos = 0.015, max_force=12):
+    closed_pos = np.deg2rad(closed_pos)
+    control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=max_force, frame_every=30)
 
 def inverse_kinematics(object_index, position, rotation):
     state = p.saveState()

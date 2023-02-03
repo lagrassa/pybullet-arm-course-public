@@ -68,8 +68,8 @@ def make_frame(yaw):
     pitch = -10.0
     roll = 0
     upAxisIndex = 2
-    camDistance = 1.2
-    pixelWidth = 320
+    camDistance = 1.4
+    pixelWidth = 220
     pixelHeight = 200
     nearPlane = 0.01
     farPlane = 100
