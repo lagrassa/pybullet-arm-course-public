@@ -19,7 +19,11 @@ def reset_robot(my_robot):
     FRAMES = []
     reasonable_joint_numbers = list(range(0,7))
     reasonable_joint_positions = [0, -math.pi / 4, 0, -3 * math.pi / 4, 0, math.pi / 2, math.pi / 4]
-    pb_utils.set_joint_positions(my_robot, reasonable_joint_numbers, reasonable_joint_positions)
+    print(reasonable_joint_numbers)
+    try:
+        pb_utils.set_joint_positions(my_robot, reasonable_joint_numbers, reasonable_joint_positions)
+    except Exception as e:
+        import ipdb; ipdb.set_trace()
     control_joint_positions(my_robot, reasonable_joint_numbers,reasonable_joint_positions, max_force=1000, frame_every=150)
 
 
