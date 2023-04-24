@@ -42,7 +42,7 @@ def save_robot_control_animation(image_name=None):
     FRAMES = []
     return filename
 
-def control_joint_positions(body, joints, positions, velocities=None, interpolate=10, frame_every = 15,time_to_run=1, verbose=False, **kwargs):
+def control_joint_positions(body, joints, positions, velocities=None, interpolate=20, frame_every = 40,time_to_run=1, verbose=False, **kwargs):
     if interpolate is not None:
         current_positions = pb_utils.get_joint_positions(body, joints)
         waypoints = np.linspace(current_positions, positions, num=interpolate)[1:]

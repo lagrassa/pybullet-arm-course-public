@@ -4,6 +4,7 @@ os.environ['MESA_GLSL_VERSION_OVERRIDE'] = '330'
 import pybullet as p
 import pybullet_data as pd
 import numpy as np
+import imageio
 
 from numpngw import write_apng, write_png
 
@@ -69,8 +70,9 @@ def make_frame(yaw):
     roll = 0
     upAxisIndex = 2
     camDistance = 1.4
-    pixelWidth = 220
-    pixelHeight = 200
+    scale = 1.6
+    pixelWidth = int(220*scale)
+    pixelHeight = int(200*scale)
     nearPlane = 0.01
     farPlane = 100
     fov = 60
@@ -100,10 +102,13 @@ def make_single_image(image_name=None,angle=0):
     write_png(image_name, frame)
 
 def make_animation(frames, image_name=None):
-    print(f"creating animated png with {len(frames)} frames")
+
     if image_name is None:
         image_name = _generate_random_filename()
-    write_apng(image_name, frames, delay=0.1)
+    image_name = image_name.replace("png", "gif")
+    #write_apng(image_name, frames, delay=0.1, bitdepth=8)
+    print(f"creating animated png {image_name} with {len(frames)} frames")
+    imageio.mimwrite(image_name, frames)
     return image_name
 
 def make_multi_view_image(image_name=None):

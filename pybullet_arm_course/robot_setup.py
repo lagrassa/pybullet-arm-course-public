@@ -12,7 +12,8 @@ def make_robot(robot_filename):
             return 
     pct.setup_pybullet_colab()
     pb_utils.add_data_path()
-    pb_utils.load_pybullet("plane.urdf")
+    #pb_utils.load_pybullet("plane.urdf")
+    pb_utils.load_pybullet("assets/short_floor.urdf")
     # pb_utils.set_real_time(True)
     pybullet.setTimeStep(1/500, physicsClientId=pb_utils.CLIENT)
     pybullet.setPhysicsEngineParameter(solverResidualThreshold=0, physicsClientId=pb_utils.CLIENT)
