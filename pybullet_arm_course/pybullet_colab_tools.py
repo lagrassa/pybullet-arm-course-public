@@ -79,11 +79,10 @@ def make_frame(yaw):
     aspect = pixelWidth / pixelHeight
     projectionMatrix = p.computeProjectionMatrixFOV(fov, aspect, nearPlane, farPlane)
             
-    img_arr = p.getCameraImage(pixelWidth,pixelHeight,viewMatrix,projectionMatrix)
+    img_arr = p.getCameraImage(pixelWidth,pixelHeight,viewMatrix,projectionMatrix, shadow=0, flags=p.ER_NO_SEGMENTATION_MASK)
     w = img_arr[0]  #width of the image, in pixels
     h = img_arr[1]  #height of the image, in pixels
     rgb = img_arr[2]  #color data RGB
-    dep = img_arr[3]  #depth data
     #print("w=",w,"h=",h)
     np_img_arr = np.reshape(rgb, (h, w, 4))
     frame = np_img_arr[:, :, :3]

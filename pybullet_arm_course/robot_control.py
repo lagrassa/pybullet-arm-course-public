@@ -27,7 +27,7 @@ def reset_robot(my_robot):
     control_joint_positions(my_robot, reasonable_joint_numbers,reasonable_joint_positions, max_force=1000, frame_every=150)
 
 
-def wait_simulate_for_duration(duration, frame_every=10):
+def wait_simulate_for_duration(duration, frame_every=30):
     dt = pb_utils.get_time_step()
     yaw = 80
     for i in range(int(math.ceil(duration / dt))):
