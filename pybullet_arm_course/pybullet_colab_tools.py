@@ -88,7 +88,7 @@ def make_frame(yaw):
     #print("w=",w,"h=",h)
     np_img_arr = np.reshape(rgb, (h, w, 4))
     frame = np_img_arr[:, :, :3]
-    return frame
+    return frame.astype(np.uint8)
 
 def _generate_random_filename():
     random_number = np.random.randint(0,5000)
