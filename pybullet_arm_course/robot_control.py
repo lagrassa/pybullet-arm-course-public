@@ -116,7 +116,7 @@ def close_gripper(body, closed_pos = 0.015, max_force=12):
     closed_pos = np.deg2rad(closed_pos)
     control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=max_force, frame_every=30)
 
-def inverse_kinematics(object_index, position, rotation):
+def inverse_kinematics(object_index, position, rotation=(1,0,0,0)):
     state = p.saveState()
     offset = 0.1
     position_up = (position[0], position[1], position[2]+offset)

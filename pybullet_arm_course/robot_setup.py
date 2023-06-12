@@ -6,10 +6,10 @@ import pybullet
 
 def make_robot(robot_filename):
     pb_utils.connect(use_gui=False)
-    for obj in pb_utils.get_bodies():
+    for idx, obj in enumerate(pb_utils.get_bodies()):
         if pb_utils.get_body_name(obj) =="panda":
             print("Robot already created")
-            return 
+            return idx 
     pct.setup_pybullet_colab()
     pb_utils.add_data_path()
     #pb_utils.load_pybullet("assets/short_floor.urdf")
@@ -40,7 +40,7 @@ def get_gripper_position(robot):
     return list(pb_utils.get_link_pose(robot, tool_link)[0])
 
 def get_joint_positions(body, joints):
-    return [np.rad2deg(rad) for rad in pb_utils.get_joint_positions(body, joints)]
+    return [np.rad2deg(rad).round().astype(np.int32) for rad in pb_utils.get_joint_positions(body, joints)]
 
 def wait_for_robot():
     while(1):

@@ -69,7 +69,7 @@ def make_frame(yaw):
     pitch = -10.0
     roll = 0
     upAxisIndex = 2
-    camDistance = 1.4
+    camDistance = 2.4
     scale = 1.6
     pixelWidth = int(220*scale)
     pixelHeight = int(200*scale)
