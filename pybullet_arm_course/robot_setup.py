@@ -4,7 +4,14 @@ import math
 import numpy as np
 import pybullet
 
-def make_robot(robot_filename):
+ROBOT_FILE_LOCATION="pybullet-arm-course-public-birjun22/assets/franka_description/robots/franka_panda.urdf"
+PLANE_FILE_LOCATION="pybullet-arm-course-public-birjun22/assets/short_floor.urdf"
+
+def make_robot(robot_filename=None, plane_filename=None):
+    if robot_filename is None:
+        robot_filename = ROBOT_FILE_LOCATION
+    if plane_filename is None:
+        plane_filename = PLANE_FILE_LOCATION
     pb_utils.connect(use_gui=False)
     for idx, obj in enumerate(pb_utils.get_bodies()):
         if pb_utils.get_body_name(obj) =="panda":
@@ -12,10 +19,9 @@ def make_robot(robot_filename):
             return idx 
     pct.setup_pybullet_colab()
     pb_utils.add_data_path()
-    pb_utils.load_pybullet("assets/short_floor.urdf")
-    # pb_utils.set_real_time(True)
+    #pb_utils.load_pybullet("assets/short_floor.urdf")
+    pb_utils.load_pybullet(plane_filename)
     box_geom = pb_utils.get_box_geometry(4.4, 4.4, 0.03)
-    #pb_utils.create_visual_shape(box_geom, color=(1,0,1,0.5), specular=1)
     pb_utils.create_box(1,1,0.0001, mass=0, color=(0.8,0.9,1.0,1))
     pybullet.setTimeStep(1/500, physicsClientId=pb_utils.CLIENT)
     pybullet.setPhysicsEngineParameter(solverResidualThreshold=0, physicsClientId=pb_utils.CLIENT)
