@@ -12,7 +12,7 @@ def make_robot(robot_filename):
             return idx 
     pct.setup_pybullet_colab()
     pb_utils.add_data_path()
-    #pb_utils.load_pybullet("assets/short_floor.urdf")
+    pb_utils.load_pybullet("assets/short_floor.urdf")
     # pb_utils.set_real_time(True)
     box_geom = pb_utils.get_box_geometry(4.4, 4.4, 0.03)
     #pb_utils.create_visual_shape(box_geom, color=(1,0,1,0.5), specular=1)

@@ -129,12 +129,11 @@ def make_basic_scene(dims=None):
     #delete any other objects in scene:
     for obj in pb_utils.get_bodies():
         if pb_utils.get_body_name(obj) not in ["plane", "panda"]:
-            print("Removing body from scene")
             pb_utils.remove_body(obj)
     mass = 0.1
     if dims is None:
         dims = BOX_DIMS
-    points = [(0.27, 0.1, dims[2]/2), (0.5, -0.07, dims[2]/2), (0.4, 0.2, dims[2]/2)]
+    points = [(0.67, 0.1, dims[2]/2), (0.5, -0.07, dims[2]/2), (0.4, 0.2, dims[2]/2)]
     boxes = []
     for color, point in zip(BOX_COLORS, points):
         boxes.append(pb_utils.create_box(dims[0], dims[1], dims[2], color=color, mass=mass))

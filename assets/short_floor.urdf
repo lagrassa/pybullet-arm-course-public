@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="flat_terrain">
+<robot name="plane">
   <link name="base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -9,7 +9,7 @@
     <visual>
       <origin xyz="0 0 -0.05" rpy="0 0 0" />
       <geometry>
-        <box size="4 4 0.1" />
+        <box size="2 2 0.1" />
       </geometry>
       <material name="desert sand">
         <color rgba="0.9297 0.7930 0.6758 1" />
@@ -18,8 +18,10 @@
     <collision>
       <origin xyz="0 0 -0.05" rpy="0 0 0" />
       <geometry>
-        <box size="4 4 0.1" />
+        <box size="2 2 0.1" />
       </geometry>
     </collision>
   </link>
 </robot>
+
+
