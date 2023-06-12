@@ -22,7 +22,7 @@ def make_robot(robot_filename=None, plane_filename=None):
     #pb_utils.load_pybullet("assets/short_floor.urdf")
     pb_utils.load_pybullet(plane_filename)
     box_geom = pb_utils.get_box_geometry(4.4, 4.4, 0.03)
-    pb_utils.create_box(1,1,0.0001, mass=0, color=(0.8,0.9,1.0,1))
+    #pb_utils.create_box(1,1,0.0001, mass=0, color=(0.8,0.9,1.0,1))
     pybullet.setTimeStep(1/500, physicsClientId=pb_utils.CLIENT)
     pybullet.setPhysicsEngineParameter(solverResidualThreshold=0, physicsClientId=pb_utils.CLIENT)
     with pb_utils.LockRenderer():
