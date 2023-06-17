@@ -45,6 +45,9 @@ def get_gripper_position(robot):
     tool_link = 7
     return list(pb_utils.get_link_pose(robot, tool_link)[0])
 
+def get_joint_angles(body, joints):
+    return get_joint_positions(body, joints) #less confusing name
+
 def get_joint_positions(body, joints):
     return [np.rad2deg(rad).round().astype(np.int32) for rad in pb_utils.get_joint_positions(body, joints)]
 
