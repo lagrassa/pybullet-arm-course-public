@@ -1,4 +1,5 @@
 import pybullet_arm_course.pybullet_tools.utils as pb_utils
+from IPython.display import Image
 import time
 from pybullet_arm_course.pybullet_tools.ikfast.ikfast import get_ik_joints, either_inverse_kinematics
 from .environment_setup import get_object_position
@@ -41,6 +42,12 @@ def save_robot_control_animation(image_name=None):
     filename =  pct.make_animation(FRAMES, image_name=image_name)
     FRAMES = []
     return filename
+
+def save_and_show_robot():
+    animation_fn = save_robot_control_animation()
+    Image(animation_fn, width=500)
+
+
 
 def control_joint_positions(body, joints, positions, velocities=None, interpolate=20, frame_every = 40,time_to_run=1, verbose=False, **kwargs):
     if interpolate is not None:
