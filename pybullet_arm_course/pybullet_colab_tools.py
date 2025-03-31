@@ -107,7 +107,7 @@ def make_animation(frames, image_name=None):
         image_name = _generate_random_filename()
     image_name = image_name.replace("png", "gif")
     #write_apng(image_name, frames, delay=0.1, bitdepth=8)
-    print(f"creating animated png {image_name} with {len(frames)} frames")
+    #print(f"creating animated png {image_name} with {len(frames)} frames")
     imageio.mimwrite(image_name, frames)
     return image_name
 

@@ -48,7 +48,7 @@ def save_and_show_robot():
 
 
 
-def control_joint_positions(body, joints, positions, velocities=None, interpolate=20, frame_every = 40,time_to_run=1, verbose=False, **kwargs):
+def control_joint_positions(body, joints, positions, velocities=None, interpolate=20, frame_every = 60,time_to_run=1, verbose=False, **kwargs):
     if interpolate is not None:
         current_positions = pb_utils.get_joint_positions(body, joints)
         waypoints = np.linspace(current_positions, positions, num=interpolate)[1:]
@@ -116,11 +116,11 @@ def goto_position(body, goal_robot_position, time_to_run=1, **kwargs):
     control_joints(body, MOVABLE_JOINT_NUMBERS, angles, time_to_run=time_to_run, **kwargs)
 
 def open_gripper(body, open_pos = 0.04):
-    control_joint_positions(body, [8,9],[open_pos, open_pos], time_to_run=2, max_force=5*240., frame_every=30)
+    control_joint_positions(body, [8,9],[open_pos, open_pos], time_to_run=1.4, max_force=5*240., frame_every=40)
 
 def close_gripper(body, closed_pos = 0.015, max_force=12):
     closed_pos = np.deg2rad(closed_pos)
-    control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=max_force, frame_every=30)
+    control_joint_positions(body, [8,9],[closed_pos, closed_pos], time_to_run=2, max_force=max_force, frame_every=40)
 
 def inverse_kinematics(object_index, position, rotation=(1,0,0,0)):
     state = p.saveState()
