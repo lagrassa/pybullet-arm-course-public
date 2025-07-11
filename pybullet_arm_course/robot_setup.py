@@ -4,8 +4,8 @@ import math
 import numpy as np
 import pybullet
 
-ROBOT_FILE_LOCATION="pybullet-arm-course-public-birsummer24/assets/franka_description/robots/franka_panda.urdf"
-PLANE_FILE_LOCATION="pybullet-arm-course-public-birsummer24/assets/short_floor.urdf"
+ROBOT_FILE_LOCATION="pybullet-arm-course-public-birsummer25/assets/franka_description/robots/franka_panda.urdf"
+PLANE_FILE_LOCATION="pybullet-arm-course-public-birsummer25/assets/short_floor.urdf"
 
 def make_robot(robot_filename=None, plane_filename=None):
     if robot_filename is None:
